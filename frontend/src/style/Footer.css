@@ -1,0 +1,69 @@
+@import "./colors.css";
+
+/* Footer.css */
+
+.footer {
+ background-color: #f8f9fa;
+ border-top: 1px solid #e7e7e7;
+ padding-top: 10px;
+ padding-bottom: 10px;
+}
+
+.footer .container {
+ max-width: 960px;
+}
+
+.footer .row {
+ width: 100%;
+ margin: 0;
+}
+
+.footer .col {
+ padding: 0;
+}
+
+.footer img {
+ display: block;
+ margin: 0 auto;
+}
+
+.footer span {
+ display: block;
+ text-align: center;
+ margin-top: 5px;
+ font-size: 0.8rem;
+ color: #000;
+}
+
+.footer a {
+ text-decoration: none;
+ color: inherit; /* Ensure the link text color is inherited */
+}
+
+.footer a:hover {
+ color: var(--vivid-orange); /* Change color on hover if needed */
+}
+
+.footer-link-text {
+ font-size: 0.7rem; /* Adjust the font size as needed */
+ display: block; /* Ensure the text is displayed as a block element */
+ margin-top: 5px; /* Add some space above the text */
+ white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+
+.footer-icon {
+ max-width: 30px; /* Increased icon size */
+ height: auto; /* Maintain aspect ratio */
+}
+
+.footer-col {
+ min-width: 30px; /* Adjust the minimum width as needed */
+}
+
+.custom-footer-icon {
+ color: #d35c0d; /* Dark slate gray color */
+}
+
+.footer a:hover .custom-footer-icon {
+ color: var(--vivid-orange); /* Change icon color on hover */
+}

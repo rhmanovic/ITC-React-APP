@@ -1,0 +1,75 @@
+@import "./colors.css";
+
+.checkout-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Add this line to give padding */
+}
+
+.checkout-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.checkout-form .form-group {
+  margin-bottom: 15px;
+}
+
+.checkout-form .form-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.checkout-form .input-group-text {
+  background-color: #f8f9fa;
+}
+
+.checkout-form .form-control {
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.checkout-form .input-group {
+  display: flex;
+}
+
+.checkout-form .form-check-input {
+  margin-top: 0.3rem;
+}
+
+.checkout-form .form-check-label {
+  margin-left: 0.5rem;
+}
+
+.checkout-form .btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Checkout.css */
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Grey transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the overlay is on top */
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+

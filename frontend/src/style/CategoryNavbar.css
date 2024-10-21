@@ -1,0 +1,41 @@
+@import "./colors.css";
+
+/* CategoryNavbar.css */
+
+.nav-link {
+    color: #444444 !important; /* Adjusted color */
+    border: 1px solid #CCCCCC !important; /* Light gray border */
+    background-color: #F1F1F1 !important; /* Light gray background */
+    border-radius: 50px !important; /* Rounded corners */
+    padding: 0.5rem 1rem !important; /* Padding for space inside */
+    font-size: 0.875rem !important; /* Font size */
+    text-align: center !important; /* Center text */
+    margin: 0.2rem !important; /* Reduced margin between nav items */
+    display: inline-block !important; /* Inline-block to fit content */
+    white-space: nowrap !important; /* Prevent line break */
+}
+
+.nav-link.active {
+    color: white !important; /* White text */
+    background-color: var(--vivid-orange) !important; /* Orange background */
+    border: 1px solid var(--vivid-orange) !important; /* Orange border */
+}
+
+.category-navbar {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    padding: 0.5rem;
+}
+
+.category-navbar::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar for WebKit browsers like Chrome and Safari */
+}
+
+.category-navbar {
+    position: sticky;
+    top: 50px; /* Adjust based on your actual navbar height */
+    z-index: 1020; 
+    background-color: white; /* Ensures readability */
+}
+

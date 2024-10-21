@@ -1,0 +1,26 @@
+@import "./colors.css";
+
+/* OrderStatus.css */
+.order-status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 120px); /* Adjust this value to ensure proper height */
+  padding: 20px; /* Optional: Add padding for better spacing */
+}
+
+.order-status-icon {
+  font-size: 4rem;
+  color: var(--dark-slate-gray); /* Dark slate gray */
+}
+
+.btn-primary {
+  background-color: var(--vivid-orange);
+  border-color: var(--vivid-orange);
+}
+
+.btn-primary:hover {
+  background-color: var(--hover-orange);
+  border-color: var(--hover-orange);
+}

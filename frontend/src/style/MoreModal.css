@@ -1,0 +1,40 @@
+@import "./colors.css";
+
+/* MoreModal.css */
+.more-modal .modal-dialog {
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease-out; /* Increased duration to 0.5s */
+}
+
+.more-modal .modal-content {
+  border-radius: 10px 10px 0 0;
+}
+
+.more-modal .modal-header {
+  border-bottom: none;
+}
+
+.more-modal .modal-title {
+  font-size: 1.25rem;
+}
+
+.more-modal .list-group-item {
+  cursor: pointer;
+}
+
+.more-modal .list-group-item:hover {
+  background-color: var(--light-gray);
+}
+
+/* Slide-up animation */
+.more-modal.show .modal-dialog {
+  transform: translateY(0);
+}
+
+.more-modal .modal-dialog {
+  transform: translateY(100%);
+}

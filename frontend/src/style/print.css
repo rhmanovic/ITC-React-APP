@@ -1,0 +1,62 @@
+@import "./colors.css";
+
+/* print.css */
+
+/* Hide elements that should not appear in the print view */
+@media print {
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  .invoice {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .invoice-header,
+  .invoice-footer {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .invoice-header {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .invoice-details {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .invoice-details th,
+  .invoice-details td {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .invoice-details th {
+    background-color: #f9f9f9;
+  }
+
+  .invoice-summary {
+    width: 100%;
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  .invoice-summary td {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+}

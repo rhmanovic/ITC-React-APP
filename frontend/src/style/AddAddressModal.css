@@ -1,0 +1,115 @@
+@import "./colors.css";
+
+/* AddAddressModal.css */
+.add-address-modal .modal-header {
+  text-align: center;
+  border-bottom: none;
+}
+
+.add-address-modal .modal-title {
+  font-size: 1.5rem;
+  color: var(--vivid-orange); /* Vivid orange */
+}
+
+.add-address-modal .form-group {
+  margin-bottom: 1rem;
+}
+
+.add-address-modal .form-group label {
+  font-size: 1rem;
+  color: var(--dark-slate-gray); /* Dark slate gray */
+}
+
+.add-address-modal .form-control,
+.add-address-modal .form-select {
+  font-size: 1rem;
+}
+
+.add-address-modal .address-type-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.add-address-modal .address-type-buttons button {
+  flex-grow: 1;
+  margin: 0 0.25rem; /* Adjust margin for better spacing */
+  padding: 0.5rem 1rem; /* Adjust padding for uniform button size */
+  background-color: white;
+  border: 1px solid var(--vivid-orange); /* Border color */
+  color: var(--dark-slate-gray); /* Text color */
+  transition: all 0.3s ease;
+}
+
+.add-address-modal .address-type-buttons .btn-primary.active {
+  background-color: var(--vivid-orange); /* Selected background color */
+  border-color: var(--vivid-orange); /* Selected border color */
+  color: white;
+  padding: 0.5rem 1.5rem; /* Increase padding for larger width */
+}
+
+.add-address-modal .form-check-label {
+  color: var(--dark-slate-gray);
+}
+
+.add-address-modal .btn-primary {
+  background-color: var(--vivid-orange);
+  border-color: var(--vivid-orange);
+  color: white;
+}
+
+.add-address-modal .btn-primary:hover {
+  background-color: var(--hover-orange);
+  border-color: var(--hover-orange);
+  color: white;
+}
+
+.inline-form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inline-form-group .form-item {
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.inline-form-group .form-item:last-child {
+  margin-right: 0;
+}
+
+/* Slide up animation */
+.slide-up-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.slide-up-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 300ms, opacity 300ms;
+}
+
+.slide-up-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-up-exit-active {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 300ms, opacity 300ms;
+}
+
+
+
+/* Custom backdrop style for AddAddressModal */
+.modal-backdrop.show {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1055; /* Ensure the backdrop is below the modal content */
+  visibility: visible;
+}

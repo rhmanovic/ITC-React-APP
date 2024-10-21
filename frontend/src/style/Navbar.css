@@ -1,0 +1,70 @@
+@import "./colors.css";
+
+.address-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300px; /* Adjust width as needed */
+  background-color: #fff; /* White background */
+  border-right: 1px solid #e0e0e0; /* Light gray border */
+  z-index: 2000; /* Ensure the sidebar is on top */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1500; /* Ensure the overlay is below the sidebar but above other content */
+}
+
+/* Custom button styles */
+.btn-squared {
+    border: none;
+    background-color: lightgray;
+    border-radius: 0; /* This makes the button squared */
+    padding: 10px 20px; /* Adjust padding as needed */
+    color: black; /* Optional: text color */
+    width: 50%; /* Adjust as needed to fit the layout */
+}
+
+.btn-squared.active {
+    background-color: darkgray; /* Active state background color */
+    color: white; /* Optional: text color for active state */
+}
+
+/* Custom input and button styles */
+.form-control {
+    height: 50px; /* Adjust height as needed */
+    font-size: 16px; /* Adjust font size as needed */
+}
+
+.search-button {
+    height: 50px; /* Match the height of the input field */
+    border: none;
+    background-color: transparent;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px; /* Adjust padding as needed */
+    cursor: pointer;
+}
+
+/* Add shadow to the bottom border of sidebar-header */
+.sidebar-header {
+    position: relative;
+    z-index: 2100; /* Higher than sidebar to ensure visibility */
+    background-color: white; /* Ensure the header has a background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}

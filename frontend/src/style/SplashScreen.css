@@ -1,0 +1,20 @@
+@import "./colors.css";
+
+/* style/SplashScreen.css */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: transform 1s ease-in-out;
+}
+
+.splash-screen.slide-out {
+  transform: translateX(-100%);
+}

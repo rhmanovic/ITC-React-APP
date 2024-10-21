@@ -1,0 +1,13 @@
+
+/* colors.css */
+:root {
+  --vivid-orange: #FFA500;
+  --dark-slate-gray: #3F4850;
+  --hover-orange: #63474D;
+  --white: #ffffff;
+  --light-gray: #f0f0f0;
+  --dark-gray: #495057;
+  --light-blue: #1100ff;
+  --black: #000000;
+  --blue-shadow: rgba(0, 123, 255, 0.25);
+}
