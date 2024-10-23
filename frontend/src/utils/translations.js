@@ -1,5 +1,7 @@
 const translations = {
   en: {
+    PaybyKnet: "Pay by Knet", // New translation for Knet
+    PaybyCash: "Pay by Cash", 
     paymentStatus: 'Payment Status',
     status: 'Status',
     orderNumber: 'Order Number',
@@ -183,6 +185,8 @@ const translations = {
     }
   },
   ar: {
+    PaybyKnet: "الدفع بواسطة كي نت",  // New translation for Knet
+    PaybyCash: "الدفع نقدًا",         // New translation for Cash
     paymentStatus: 'حالة الدفع',
     status: 'الحالة',
     orderNumber: 'رقم الطلب',
