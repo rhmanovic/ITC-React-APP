@@ -77,9 +77,14 @@ function Checkout({ language, cart, customer, clearCart }) {
         }
       });
 
-      // Redirect 
+      // If there's a redirect URL (for cash payment), handle the redirection in the frontend
       if (response.data.redirectUrl) {
         window.location.href = response.data.redirectUrl;
+      } else {
+        // Handle other cases (e.g., successful payment via knet)
+        alert('Order submitted successfully!');
+        // Optionally clear the cart or redirect to a success page
+        clearCart();
       }
     } catch (error) {
       console.error('Error submitting order:', error);
@@ -88,6 +93,7 @@ function Checkout({ language, cart, customer, clearCart }) {
       setLoading(false); // Stop the loading spinner
     }
   };
+
 
   const handlePhoneChange = (e) => {
     const { value } = e.target;

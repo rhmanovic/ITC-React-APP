@@ -21,6 +21,7 @@ import SearchOrder from "./components/SearchOrder";
 import Cart from "./components/Cart";
 import AboutUs from "./components/AboutUs";
 import Payment from "./components/Payment";
+import PaymentCash from "./components/PaymentCash";
 import Checkout from "./components/Checkout";
 import LoggedInCheckout from "./components/LoggedInCheckout";
 import EditOrderPage from "./components/EditOrderPage"; // Import the EditOrderPage component
@@ -261,6 +262,7 @@ function App() {
             />
             <Route path="/about" element={<AboutUs language={language} />} />
             <Route path="/payment" element={<Payment language={language} cart={cart} customer={customer} clearCart={clearCart} />} />
+            <Route path="/PaymentCash" element={<PaymentCash language={language} cart={cart} customer={customer} clearCart={clearCart} />} />
             <Route
               path="/cart"
               element={
