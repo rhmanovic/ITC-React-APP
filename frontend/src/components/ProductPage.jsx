@@ -9,6 +9,7 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
   const { productNumber } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [selectedVariation, setSelectedVariation] = useState(null);
 
   const t = language === 'EN' ? translations.en.productPage : translations.ar.productPage;
   const currency = language === 'EN' ? translations.en.currency : translations.ar.currency;
@@ -18,14 +19,15 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
       .get(`${BASE_URL}/api/products/number/${productNumber}`)
       .then((response) => {
         setProduct(response.data.product);
+        if (response.data.product.variations && response.data.product.variations.length > 0) {
+          setSelectedVariation(response.data.product.variations[0]); // Default to the first variation
+        }
       })
       .catch((error) => console.error("Error fetching product:", error));
   }, [productNumber]);
 
   const handleAddToCart = () => {
     if (product && quantity) {
-      
-
       const cartItem = {
         productId: product._id,
         productNumber: product.product_number,
@@ -33,14 +35,12 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
         product_name_en: product.product_name_en,
         product_name_ar: product.product_name_ar,
         warranty: product.warranty,
-        variantId: null,
-        variantName: null,
+        variantId: selectedVariation ? selectedVariation._id : null,
+        variantName: selectedVariation ? (language === 'EN' ? selectedVariation.v_name_en : selectedVariation.v_name_ar) : null,
         brandName: product.brand,
         productImage: product.product_image,
-        price: parseFloat(product.sale_price),
+        price: parseFloat(selectedVariation ? selectedVariation.v_sale_price : product.sale_price),
         quantity: parseInt(quantity, 10),
-        
-        
       };
       onAddToCart(cartItem);
     } else {
@@ -52,8 +52,12 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
     return <p>{t.loading}...</p>;
   }
 
+  // Log all items in the cart
+  console.log("product Details:", product);
+
   return (
     <Container className="main mt-5 product-page">
+      <p>{product.product_name_en}</p>
       <Row>
         <Col xs={12} md={6}>
           {product.product_images && product.product_images.length > 0 ? (
@@ -88,13 +92,38 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
             />
           )}
           <h1 className="mt-3">{language === 'EN' ? product.product_name_en : product.product_name_ar}</h1>
-          <h2>{parseFloat(product.sale_price).toFixed(3)} {currency}</h2>
+          <h2>{parseFloat(selectedVariation ? selectedVariation.v_sale_price : product.sale_price).toFixed(3)} {currency}</h2>
           <div
             className="my-4 product-description"
             dangerouslySetInnerHTML={{
               __html: language === 'EN' ? product.description_en : product.description_ar,
             }}
           ></div>
+
+          {/* Variation Selector */}
+          {product.variations && product.variations.length > 0 && (
+            <Form.Group className="mt-3">
+              <Form.Label>{t.chooseVariation}</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedVariation ? selectedVariation._id : ''}
+                onChange={(e) => {
+                  const selected = product.variations.find(variation => variation._id === e.target.value);
+                  setSelectedVariation(selected);
+                }}
+              >
+                {product.variations
+                  .filter(variation => variation.v_show) // Only show variations with v_show set to true
+                  .map((variation) => (
+                    <option key={variation._id} value={variation._id}>
+                      {language === 'EN' ? variation.v_name_en : variation.v_name_ar} - {parseFloat(variation.v_sale_price).toFixed(3)} {currency}
+                    </option>
+                  ))}
+              </Form.Control>
+            </Form.Group>
+          )}
+
+          {/* Quantity Selector */}
           <Form.Group className="mt-3">
             <Form.Label>{t.quantity}</Form.Label>
             <div className="item-quantity d-flex align-items-center mt-2">
