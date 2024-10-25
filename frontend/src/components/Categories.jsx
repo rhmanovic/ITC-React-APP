@@ -29,26 +29,28 @@ function Categories({ language }) {
         <p className="no-categories">No categories available.</p>
       ) : (
         <Row>
-          {categories.map((category) => (
-            <Col key={category._id} xs={6} md={4} lg={3} className="mb-4">
-              <Card 
-                onClick={() => handleCategoryClick(category.category_number)} 
-                className="category-card"
-              >
-                <Card.Img
-                  variant="top"
-                  src={category.imgsrc ? `${BASE_URL}${category.imgsrc}` : "https://via.placeholder.com/150x265"}
-                  alt="Category image"
-                  className="rounded"
-                />
-                <Card.Body className="card-body">
-                  <Card.Title>
-                    {language === 'EN' ? category.EnglishName : category.ArabicName}
-                  </Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+          {categories
+            .filter(category => category.status) // Filter categories with status === true
+            .map((category) => (
+              <Col key={category._id} xs={6} md={4} lg={3} className="mb-4">
+                <Card 
+                  onClick={() => handleCategoryClick(category.category_number)} 
+                  className="category-card"
+                >
+                  <Card.Img
+                    variant="top"
+                    src={category.imgsrc ? `${BASE_URL}${category.imgsrc}` : "https://via.placeholder.com/150x265"}
+                    alt="Category image"
+                    className="rounded"
+                  />
+                  <Card.Body className="card-body">
+                    <Card.Title>
+                      {language === 'EN' ? category.EnglishName : category.ArabicName}
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
         </Row>
       )}
       <div style={{ height: '50px' }}></div>
