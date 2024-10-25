@@ -26,6 +26,7 @@ import Checkout from "./components/Checkout";
 import LoggedInCheckout from "./components/LoggedInCheckout";
 import EditOrderPage from "./components/EditOrderPage"; // Import the EditOrderPage component
 import ProductPage from "./components/ProductPage"; // Import the EditOrderPage component
+import OfferPage from "./components/OfferPage"; // Import the EditOrderPage component
 
 
 import CustomModal from "./modals/CustomModal";
@@ -294,6 +295,7 @@ function App() {
               }
             />
             <Route path="/product/:productNumber" element={<ProductPage language={language}  onAddToCart={handleAddToCart} />} />
+            <Route path="/offer/:offerNumber" element={<OfferPage language={language}  onAddToCart={handleAddToCart} />} />
             {/* <Route path="/product/:productId" element={<ProductPage language={language} />} /> */}
             {/* <Route path="/order-status" element={<OrderStatus language={language} />} /> */}
             <Route path="/seach-order" element={<SearchOrder language={language} />} />
