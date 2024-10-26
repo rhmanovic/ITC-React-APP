@@ -45,6 +45,7 @@ function CategoryProducts({ language, onAddToCart, cart }) {
                   variant="top"
                   src={product.product_image ? `${BASE_URL}${product.product_image}` : "https://via.placeholder.com/150x265"}
                   alt={language === 'EN' ? product.product_name_en : product.product_name_ar}
+                  loading="lazy" // Lazy load the image
                 />
                 <Card.Body className="card-body">
                   <Card.Title className="product-title">

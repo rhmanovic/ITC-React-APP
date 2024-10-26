@@ -69,7 +69,7 @@ const translations = {
       subtotal: 'Subtotal',
       deliveryFee: 'Delivery Fee',
       total: 'Total',
-      proceedToCheckout: 'Proceed to Checkout'
+      proceedToCheckout: 'Checkout'
     },
     footer: {
       more: 'More',
@@ -182,7 +182,9 @@ const translations = {
       quantity: 'Quantity',
       addToCart: 'Add to Cart',
       enterValidQuantity: 'Please enter a valid quantity',
-      loading: 'Loading'
+      loading: 'Loading',
+      buyNow: "Buy Now",
+      limitedTimeOffer: "Limited Time Offer!"
     }
   },
   ar: {
@@ -257,7 +259,7 @@ const translations = {
       subtotal: 'المجموع الفرعي',
       deliveryFee: 'رسوم التوصيل',
       total: 'المجموع',
-      proceedToCheckout: 'الذهاب لإتمام الطلب'
+      proceedToCheckout: 'اتمام الطلب'
     },
     footer: {
       more: 'المزيد',
@@ -372,7 +374,9 @@ const translations = {
         quantity: 'الكمية',
         addToCart: 'أضف إلى السلة',
         enterValidQuantity: 'يرجى إدخال كمية صالحة',
-        loading: 'جارٍ التحميل'
+        loading: 'جارٍ التحميل',
+        buyNow: "اشتر الآن",
+        limitedTimeOffer: "عرض محدود!"
       }
     
 

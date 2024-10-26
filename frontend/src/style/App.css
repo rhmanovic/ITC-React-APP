@@ -208,25 +208,25 @@ html, body {
   margin-top: 10px;
 }
 
-.old-price {
-  text-decoration: line-through;
-  color: #7f7f7f;
-  margin-left: 10px;
-  font-size: 1.2rem;
-}
 
-.new-price {
-  color: #ff0000;
-  font-weight: bold;
-  font-size: 2rem;
-  margin-right: 10px;
-}
 
 .currency {
   margin-left: 5px;
   font-size: 1rem;
 }
 
+
+
+/* Placeholder styling */
+.loading-placeholder {
+  background-color: #f0f0f0; /* Light gray or your preferred placeholder color */
+  height: 150px; /* Adjust the size to match your image size */
+}
+
+/* Loaded image styling */
+.loaded {
+  background-color: transparent; /* Remove the background once loaded */
+}
 
 
 

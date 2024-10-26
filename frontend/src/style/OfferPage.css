@@ -1,0 +1,86 @@
+.countdown-container {
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.countdown-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffcc00;
+}
+
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  /* margin-top: 5px; */
+}
+
+.time-segment {
+  text-align: center;
+  padding: 5px;
+}
+
+.time {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+
+.discount-badge {
+  background: linear-gradient(90deg, #fbe8db, #fdeee6); /* Light peach gradient */
+  color: #7a4a2f; /* Brown text color */
+  /* background-color: #333; /* Dark color */
+  /* color: #ffffff; */ */
+  font-weight: bold;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+.old-price {
+  color: #a0a0a0;
+  font-size: 1rem;
+}
+
+.new-price {
+  color: #f00000; /* Bold orange color */
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+/* OfferPage.css */
+
+.btn-buy-now {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;         /* Full width */
+  height: 60px;        /* Set height as desired */
+  border: none;        /* Remove any border */
+  border-radius: 0;    /* Square corners */
+  font-size: 1.5rem;   /* Increase font size */
+  font-weight: bold;   /* Make font bold */
+  background-color: #000000; /* Button color */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+}
+
+.btn-buy-now:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}

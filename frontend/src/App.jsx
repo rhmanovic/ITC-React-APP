@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-// import "./style/App.css";
 import "./style/Modal.css";
 import "./style/SplashScreen.css";
 
-import { BASE_URL, YOUR_MERCHANT_ID } from "./config"; // Add YOUR_MERCHANT_ID here
+import { BASE_URL, YOUR_MERCHANT_ID } from "./config";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Menu from "./components/Menu";
 import Categories from "./components/Categories";
 import CategoryProducts from "./components/CategoryProducts";
-// import OrderStatus from "./components/OrderStatus";
 import SearchOrder from "./components/SearchOrder";
-// import OrderStatusAll from "./components/OrderStatusAll";
 import Cart from "./components/Cart";
 import AboutUs from "./components/AboutUs";
 import Payment from "./components/Payment";
 import PaymentCash from "./components/PaymentCash";
 import Checkout from "./components/Checkout";
 import LoggedInCheckout from "./components/LoggedInCheckout";
-import EditOrderPage from "./components/EditOrderPage"; // Import the EditOrderPage component
-import ProductPage from "./components/ProductPage"; // Import the EditOrderPage component
-import OfferPage from "./components/OfferPage"; // Import the EditOrderPage component
-
+import EditOrderPage from "./components/EditOrderPage";
+import ProductPage from "./components/ProductPage";
+import OfferPage from "./components/OfferPage";
 
 import CustomModal from "./modals/CustomModal";
 import LoginModal from "./modals/LoginModal";
@@ -42,8 +38,9 @@ import ProductModal from "./modals/ProductModal";
 import VariantModal from "./modals/VariantModal"; 
 import DummyCartModal from "./modals/DummyCartModal"; 
 
-
 function App() {
+  const location = useLocation(); // Get the current route location
+
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [merchantName, setMerchantName] = useState("");
@@ -220,177 +217,179 @@ function App() {
     toast.success("Order Created");
   };
 
+  // Check if current route is the OfferPage
+  const isOfferPage = location.pathname.startsWith("/offer");
+
   return (
-    <Router>
-      <div className="pt-5" dir={language === "EN" ? "ltr" : "rtl"}>
-        {showSplash && (
-          <div className={`splash-screen ${splashClass}`}>
-            <SplashScreen />
-          </div>
-        )}
-        <Navbar
-          projectName={merchantName}
-          language={language}
-          setLanguage={handleLanguageChange}
-          customer={customer}
-          onLogout={handleLogout}
-        />
-        <div className="flex-grow-1 pt-1">
-          <Routes>
-            <Route path="/" element={<Categories language={language} />} />
-            <Route
-              path="/menu"
-              element={
-                <Menu
-                  categories={categories}
-                  products={products}
-                  language={language}
-                  onAddToCart={handleAddToCart}
-                  onProductClick={handleProductClick} 
-                />
-              }
-            />
-            <Route
-              path="/category/:categoryNumber"
-              element={
-                <CategoryProducts
-                  language={language}
-                  onAddToCart={handleAddToCart}
-                  cart={cart} // Pass the cart prop here
-                  onVariantClick={handleVariantClick}
-                />
-              }
-            />
-            <Route path="/about" element={<AboutUs language={language} />} />
-            <Route path="/payment" element={<Payment language={language} cart={cart} customer={customer} clearCart={clearCart} />} />
-            <Route path="/PaymentCash" element={<PaymentCash language={language} cart={cart} customer={customer} clearCart={clearCart} />} />
-            <Route
-              path="/cart"
-              element={
-                <Cart
-                  language={language}
-                  cart={cart}
-                  onIncreaseQuantity={handleIncreaseQuantity}
-                  onDecreaseQuantity={handleDecreaseQuantity}
-                  onRemoveItem={handleRemoveItem}
-                  onUpdateQuantity={handleQuantityChange}
-                  customer={customer}
-                />
-              }
-            />
-            <Route
-              path="/checkout"
-              element={
-                <Checkout language={language} cart={cart} customer={customer} clearCart={clearCart} />
-              }
-            />
-            <Route
-              path="/logged-in-checkout"
-              element={
-                <LoggedInCheckout
-                  language={language}
-                  cart={cart}
-                  customer={customer}
-                />
-              }
-            />
-            <Route path="/product/:productNumber" element={<ProductPage language={language}  onAddToCart={handleAddToCart} />} />
-            <Route path="/offer/:offerNumber" element={<OfferPage language={language}  onAddToCart={handleAddToCart} />} />
-            {/* <Route path="/product/:productId" element={<ProductPage language={language} />} /> */}
-            {/* <Route path="/order-status" element={<OrderStatus language={language} />} /> */}
-            <Route path="/seach-order" element={<SearchOrder language={language} />} />
-            {/* <Route path="/order-status-all" element={<OrderStatusAll language={language} />} /> */}
-            <Route path="/edit-order/:id" element={<EditOrderPage cart={cart} />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
+    <div className="pt-5" dir={language === "EN" ? "ltr" : "rtl"}>
+      {showSplash && (
+        <div className={`splash-screen ${splashClass}`}>
+          <SplashScreen />
         </div>
+      )}
+      <Navbar
+        projectName={merchantName}
+        language={language}
+        setLanguage={handleLanguageChange}
+        customer={customer}
+        onLogout={handleLogout}
+      />
+      <div className="flex-grow-1 pt-1">
+        <Routes>
+          <Route path="/" element={<Categories language={language} />} />
+          <Route
+            path="/menu"
+            element={
+              <Menu
+                categories={categories}
+                products={products}
+                language={language}
+                onAddToCart={handleAddToCart}
+                onProductClick={handleProductClick} 
+              />
+            }
+          />
+          <Route
+            path="/category/:categoryNumber"
+            element={
+              <CategoryProducts
+                language={language}
+                onAddToCart={handleAddToCart}
+                cart={cart}
+                onVariantClick={handleVariantClick}
+              />
+            }
+          />
+          <Route path="/about" element={<AboutUs language={language} />} />
+          <Route path="/payment" element={<Payment language={language} cart={cart} customer={customer} clearCart={clearCart} />} />
+          <Route path="/PaymentCash" element={<PaymentCash language={language} cart={cart} customer={customer} clearCart={clearCart} />} />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                language={language}
+                cart={cart}
+                onIncreaseQuantity={handleIncreaseQuantity}
+                onDecreaseQuantity={handleDecreaseQuantity}
+                onRemoveItem={handleRemoveItem}
+                onUpdateQuantity={handleQuantityChange}
+                customer={customer}
+              />
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <Checkout language={language} cart={cart} customer={customer} clearCart={clearCart} />
+            }
+          />
+          <Route
+            path="/logged-in-checkout"
+            element={
+              <LoggedInCheckout
+                language={language}
+                cart={cart}
+                customer={customer}
+              />
+            }
+          />
+          <Route path="/product/:productNumber" element={<ProductPage language={language} onAddToCart={handleAddToCart} />} />
+          <Route path="/offer/:offerNumber" element={<OfferPage language={language} onAddToCart={handleAddToCart} />} />
+          <Route path="/seach-order" element={<SearchOrder language={language} />} />
+          <Route path="/edit-order/:id" element={<EditOrderPage cart={cart} />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+
+      {/* Conditionally render the footer except on the OfferPage */}
+      {!isOfferPage && (
         <Footer
           language={language}
           setShowMoreModal={setShowMoreModal}
           setShowLoginModal={setShowLoginModal}
           setShowAccountModal={setShowAccountModal}
           setShowAddAddressModal={setShowAddAddressModal}
-          setShowDummyCartModal={setShowDummyCartModal} // Add this line to pass setShowDummyCartModal
+          setShowDummyCartModal={setShowDummyCartModal}
           customer={customer}
         />
-        <CustomModal
-          show={showMoreModal}
-          onHide={() => setShowMoreModal(false)}
-          language={language}
-        />
-        <LoginModal
-          show={showLoginModal}
-          onHide={() => setShowLoginModal(false)}
-          language={language}
-          onLogin={handleLogin}
-          onSignUpClick={handleSignUp}
-        />
-        <SignUpModal
-          show={showSignUpModal}
-          onHide={() => setShowSignUpModal(false)}
-          language={language}
-          onLogin={handleLogin}
-        />
-        <AccountModal
-          show={showAccountModal}
-          onHide={() => setShowAccountModal(false)}
-          language={language}
-          customer={customer}
-          onLogout={handleLogout}
-          setShowUpdateProfileModal={setShowUpdateProfileModal}
-          setShowAddressesModal={setShowAddressesModal}
-          setShowChangePasswordModal={setShowChangePasswordModal}
-        />
-        <UpdateProfileModal
-          show={showUpdateProfileModal}
-          onHide={() => setShowUpdateProfileModal(false)}
-          language={language}
-          customer={customer}
-          updateCustomer={updateCustomer}
-        />
-        <AddressesModal
-          show={showAddressesModal}
-          onHide={() => setShowAddressesModal(false)}
-          language={language}
-          setShowAddAddressModal={setShowAddAddressModal}
-        />
-        <AddAddressModal
-          show={showAddAddressModal}
-          handleClose={handleCloseAddAddressModal}
-          language={language}
-          onAddressAdded={handleAddressAdded}
-        />
-        <ChangePasswordModal
-          show={showChangePasswordModal}
-          onHide={() => setShowChangePasswordModal(false)}
-          language={language}
-        />
-        <ProductModal
-          show={showProductModal}
-          cart={cart}
-          handleClose={() => setShowProductModal(false)}
-          product={selectedProduct}
-          language={language}
-          onAddToCart={handleAddToCart}
+      )}
 
-        />
-        <VariantModal
-          show={showVariantModal}
-          handleClose={() => setShowVariantModal(false)}
-          variant={selectedVariant}
-          product={selectedProduct}
-          language={language}
-          onAddToCart={handleAddToCart}
-          cart={cart} 
-        />
-        <DummyCartModal
-          show={showDummyCartModal}
-          handleClose={() => setShowDummyCartModal(false)}
-          cart={cart}
-        />
-        <ToastContainer />
-      </div>
-    </Router>
+      <CustomModal
+        show={showMoreModal}
+        onHide={() => setShowMoreModal(false)}
+        language={language}
+      />
+      <LoginModal
+        show={showLoginModal}
+        onHide={() => setShowLoginModal(false)}
+        language={language}
+        onLogin={handleLogin}
+        onSignUpClick={handleSignUp}
+      />
+      <SignUpModal
+        show={showSignUpModal}
+        onHide={() => setShowSignUpModal(false)}
+        language={language}
+        onLogin={handleLogin}
+      />
+      <AccountModal
+        show={showAccountModal}
+        onHide={() => setShowAccountModal(false)}
+        language={language}
+        customer={customer}
+        onLogout={handleLogout}
+        setShowUpdateProfileModal={setShowUpdateProfileModal}
+        setShowAddressesModal={setShowAddressesModal}
+        setShowChangePasswordModal={setShowChangePasswordModal}
+      />
+      <UpdateProfileModal
+        show={showUpdateProfileModal}
+        onHide={() => setShowUpdateProfileModal(false)}
+        language={language}
+        customer={customer}
+        updateCustomer={updateCustomer}
+      />
+      <AddressesModal
+        show={showAddressesModal}
+        onHide={() => setShowAddressesModal(false)}
+        language={language}
+        setShowAddAddressModal={setShowAddAddressModal}
+      />
+      <AddAddressModal
+        show={showAddAddressModal}
+        handleClose={handleCloseAddAddressModal}
+        language={language}
+        onAddressAdded={handleAddressAdded}
+      />
+      <ChangePasswordModal
+        show={showChangePasswordModal}
+        onHide={() => setShowChangePasswordModal(false)}
+        language={language}
+      />
+      <ProductModal
+        show={showProductModal}
+        cart={cart}
+        handleClose={() => setShowProductModal(false)}
+        product={selectedProduct}
+        language={language}
+        onAddToCart={handleAddToCart}
+      />
+      <VariantModal
+        show={showVariantModal}
+        handleClose={() => setShowVariantModal(false)}
+        variant={selectedVariant}
+        product={selectedProduct}
+        language={language}
+        onAddToCart={handleAddToCart}
+        cart={cart} 
+      />
+      <DummyCartModal
+        show={showDummyCartModal}
+        handleClose={() => setShowDummyCartModal(false)}
+        cart={cart}
+      />
+      <ToastContainer />
+    </div>
   );
 }
 
