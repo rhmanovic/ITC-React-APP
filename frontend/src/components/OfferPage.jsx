@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Container, Col, Card, Button, Form } from "react-bootstrap";
 import { BASE_URL } from "../config";
 import Countdown from "react-countdown";
 import translations from "../utils/translations";
@@ -13,6 +13,7 @@ const OfferPage = ({ language = 'EN', onAddToCart }) => {
   const [offer, setOffer] = useState(null);
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [selectedVariation, setSelectedVariation] = useState(null); // Add state for selected variation
 
   const t = language === 'EN' ? translations.en.productPage : translations.ar.productPage;
   const currency = language === 'EN' ? translations.en.currency : translations.ar.currency;
@@ -23,6 +24,12 @@ const OfferPage = ({ language = 'EN', onAddToCart }) => {
       .then((response) => {
         setOffer(response.data.offer);
         setProduct(response.data.product);
+
+        // Default to the first available variation if present
+        if (response.data.product.variations && response.data.product.variations.length > 0) {
+          setSelectedVariation(response.data.product.variations[0]);
+        }
+
         setQuantity(1);
       })
       .catch((error) => console.error("Error fetching offer or product:", error));
@@ -53,8 +60,11 @@ const OfferPage = ({ language = 'EN', onAddToCart }) => {
         quantity: parseInt(quantity, 10),
         offer_quantity: parseFloat(offer.offer_quantity),
         warranty: product.warranty,
-        variantId: null,
-        variantName: null,
+        variantId: selectedVariation ? selectedVariation._id : null,
+        variantName: selectedVariation ? (language === 'EN' ? selectedVariation.v_name_en : selectedVariation.v_name_ar) : null,
+        v_name_en: selectedVariation ? selectedVariation.v_name_en : null,
+        v_name_ar: selectedVariation ? selectedVariation.v_name_ar : null,
+        v_warranty: selectedVariation ? selectedVariation.v_warranty : null,
       };
 
       onAddToCart(cartItem);
@@ -64,28 +74,27 @@ const OfferPage = ({ language = 'EN', onAddToCart }) => {
     }
   };
 
+
   if (!offer || !product) {
     return <p>{t.loading}</p>;
   }
 
-  const countdownRenderer = ({ hours, minutes, seconds }) => {
-    return (
-      <div className="countdown-timer">
-        <div className="time-segment">
-          <span className="time">{hours}</span>
-          <span className="label">Hours</span>
-        </div>
-        <div className="time-segment">
-          <span className="time">{minutes}</span>
-          <span className="label">Minutes</span>
-        </div>
-        <div className="time-segment">
-          <span className="time">{seconds}</span>
-          <span className="label">Seconds</span>
-        </div>
+  const countdownRenderer = ({ hours, minutes, seconds }) => (
+    <div className="countdown-timer">
+      <div className="time-segment">
+        <span className="time">{hours}</span>
+        <span className="label">Hours</span>
       </div>
-    );
-  };
+      <div className="time-segment">
+        <span className="time">{minutes}</span>
+        <span className="label">Minutes</span>
+      </div>
+      <div className="time-segment">
+        <span className="time">{seconds}</span>
+        <span className="label">Seconds</span>
+      </div>
+    </div>
+  );
 
   return (
     <div className="main">
@@ -122,6 +131,32 @@ const OfferPage = ({ language = 'EN', onAddToCart }) => {
               </span>
               <span className="discount-badge">%{discountPercentage}-</span>
             </div>
+
+            {/* Variation Selector */}
+            {product.variations && product.variations.length > 0 && (
+              <Form.Group className="mt-3">
+                <Form.Label>
+                  {language === 'EN' ? "Choose Color" : "اختر اللون"}
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  value={selectedVariation ? selectedVariation._id : ''}
+                  onChange={(e) => {
+                    const selected = product.variations.find(variation => variation._id === e.target.value);
+                    setSelectedVariation(selected);
+                  }}
+                >
+                  {product.variations
+                    .filter(variation => variation.v_show) // Only show variations with v_show set to true
+                    .map((variation) => (
+                      <option key={variation._id} value={variation._id}>
+                        {language === 'EN' ? variation.v_name_en : variation.v_name_ar}
+                      </option>
+                    ))}
+                </Form.Control>
+              </Form.Group>
+            )}
+
 
             <Form.Group className="mt-3">
               <div className="item-quantity d-flex align-items-center mt-2">

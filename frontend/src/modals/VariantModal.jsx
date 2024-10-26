@@ -90,7 +90,7 @@ function VariantModal({ show, handleClose, variant, language, onAddToCart, produ
         variantName: variant ? (language === 'EN' ? variant.v_name_en : variant.v_name_ar) : null,
         v_name_en: variant.v_name_en,
         v_name_ar: variant.v_name_ar,
-          v_warranty: variant.v_warranty,
+        v_warranty: variant.v_warranty,
         brandName: variant ? variant.v_brand : null, // Add the brand name of the variant
         productImage: product.product_image,
         price: parseFloat(price),
