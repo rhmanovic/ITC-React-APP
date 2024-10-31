@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import Menu from "./components/Menu";
 import Categories from "./components/Categories";
 import CategoryProducts from "./components/CategoryProducts";
+import Offers from "./components/Offers";
 import SearchOrder from "./components/SearchOrder";
 import Cart from "./components/Cart";
 import AboutUs from "./components/AboutUs";
@@ -218,7 +219,7 @@ function App() {
   };
 
   // Check if current route is the OfferPage
-  const isOfferPage = location.pathname.startsWith("/offer");
+  const isOfferPage = location.pathname.startsWith("/offer/");
 
   return (
     <div className="pt-5" dir={language === "EN" ? "ltr" : "rtl"}>
@@ -260,6 +261,18 @@ function App() {
               />
             }
           />
+          <Route
+            path="/offers"
+            element={
+              <Offers
+                language={language}
+                onAddToCart={handleAddToCart}
+                cart={cart}
+                onVariantClick={handleVariantClick}
+              />
+            }
+          />
+          
           <Route path="/about" element={<AboutUs language={language} />} />
           <Route path="/payment" element={<Payment language={language} cart={cart} customer={customer} clearCart={clearCart} />} />
           <Route path="/PaymentCash" element={<PaymentCash language={language} cart={cart} customer={customer} clearCart={clearCart} />} />

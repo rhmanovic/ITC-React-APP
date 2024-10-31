@@ -84,3 +84,18 @@
 .btn-buy-now:hover {
   background-color: #0056b3; /* Darker shade on hover */
 }
+
+
+
+
+/* Offers */
+.old-price-offers {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.new-price-offers {
+  color: #f00000; /* Bold orange color */
+  font-weight: bold;
+  font-size: 1.2rem;
+}

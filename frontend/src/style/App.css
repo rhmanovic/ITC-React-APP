@@ -229,4 +229,53 @@ html, body {
 }
 
 
+.product-card {
+  position: relative;
+  overflow: visible; /* Ensure overflow is visible on the card */
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  background-color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 
+.warranty-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 0.7rem;
+  text-align: center;
+  z-index: 10;
+}
+
+/* Badge color variations */
+.green-badge {
+  background-color: #4CAF50; /* Green for 1-year warranty */
+}
+
+.blue-badge {
+  background-color: #2196F3; /* Blue for 2-year warranty */
+}
+
+.gold-badge {
+  background-color: #FFD700; /* Gold for 3 or more years warranty */
+}
+
+
+
+/* Optional: Ensure that overflow is also visible on any parent containers */
+.main, .container {
+  overflow: visible; /* Allow overflow if the parent container clips it */
+}

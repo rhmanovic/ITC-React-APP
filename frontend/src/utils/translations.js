@@ -184,6 +184,7 @@ const translations = {
       enterValidQuantity: 'Please enter a valid quantity',
       loading: 'Loading',
       buyNow: "Buy Now",
+      ProductDetails: "Product Details",
       limitedTimeOffer: "Limited Time Offer!"
     }
   },
@@ -376,6 +377,7 @@ const translations = {
         enterValidQuantity: 'يرجى إدخال كمية صالحة',
         loading: 'جارٍ التحميل',
         buyNow: "اشتر الآن",
+        ProductDetails: "تفاصيل المنتج",
         limitedTimeOffer: "عرض محدود!"
       }
     
