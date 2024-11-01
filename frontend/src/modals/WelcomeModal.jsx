@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Spinner, Alert, Form } from "react-bootstrap";
+import { Modal, Button, Spinner, Alert, Form, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Countdown from "react-countdown";
 import { BASE_URL } from "../config";
@@ -66,7 +66,8 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
       offer_quantity: parseFloat(offer.offer_quantity),
       warranty: selectedVariation ? selectedVariation.v_warranty : product?.warranty,
       variantId: selectedVariation ? selectedVariation._id : "dummy_variation_id",
-      variantName: selectedVariation ? (language === 'EN' ? selectedVariation.v_name_en : selectedVariation.v_name_ar) : null,v_name_en: selectedVariation ? selectedVariation.v_name_en : null,
+      variantName: selectedVariation ? (language === 'EN' ? selectedVariation.v_name_en : selectedVariation.v_name_ar) : null,
+      v_name_en: selectedVariation ? selectedVariation.v_name_en : null,
       v_name_ar: selectedVariation ? selectedVariation.v_name_ar : null,
       v_warranty: selectedVariation ? selectedVariation.v_warranty : null
     };
@@ -108,18 +109,44 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
           <Alert variant="danger">{error}</Alert>
         ) : (
           <>
-            <img
-              src={`${BASE_URL}${offer?.offer_image || "/dummy-image.jpg"}`}
-              alt={offer?.offer_name_en || "Dummy Offer"}
-              style={{ width: "100%", height: "auto", marginBottom: "15px" }}
-            />
-            <div className="countdown-container mt-3">
-              <h5 className="countdown-title">{t.limitedTimeOffer || "Limited Time Offer"}</h5>
-              <Countdown 
-                date={getNextMidnight()} 
-                renderer={countdownRenderer}
-              />
-            </div>
+            {/* Row with 2 columns above the image */}
+            <Row className="mb-3">
+              <Col>
+                <div>{language === 'EN' ? "Details" : "تفاصيل"}</div>
+                <h2 className="">{language === 'EN' ? offer?.offer_name_en : offer?.offer_name_ar || "Welcome"}</h2>
+                <Form.Group className="mt-3">
+                  <Form.Label>{language === 'EN' ? "Select Variation" : "اختر التنوع"}</Form.Label>
+                  <Form.Control as="select" value={selectedVariation?._id || ""} onChange={handleVariationChange}>
+                    {product?.variations?.map((variation) => (
+                      <option key={variation._id} value={variation._id}>
+                        {language === 'EN' ? variation.v_name_en : variation.v_name_ar}
+                      </option>
+                    ))}
+                    {!product && <option value="dummy_variation_id">Dummy Variation</option>}
+                  </Form.Control>
+                </Form.Group>
+
+
+                <Form.Group className="mt-3">
+                  <div className="item-quantity d-flex align-items-center mt-2">
+                    <button className="btn btn-outline-secondary quantity-btn" onClick={() => setQuantity(prev => Math.max(prev - 1, 1))}>-</button>
+                    <input type="number" className="form-control quantity-input" value={quantity} readOnly />
+                    <button className="btn btn-outline-secondary quantity-btn" onClick={() => setQuantity(prev => prev + 1)}>+</button>
+                  </div>
+                </Form.Group>
+                
+              </Col>
+              <Col>
+                <div>{language === 'EN' ? "More Info" : "مزيد من المعلومات"}</div>
+                <img
+                  src={`${BASE_URL}${offer?.offer_image || "/dummy-image.jpg"}`}
+                  alt={offer?.offer_name_en || "Dummy Offer"}
+                  style={{ width: "100%", height: "auto", marginBottom: "15px" }}
+                />
+              </Col>
+            </Row>
+
+
             <div className="price-section d-flex align-items-center mt-3">
               <span className="new-price ms-2">
                 {parseFloat(offer.discounted_price).toFixed(3)} {currency}
@@ -129,33 +156,28 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
               </span>
               <span className="discount-badge">%{discountPercentage}-</span>
             </div>
-            <Form.Group className="mt-3">
-              <Form.Label>{language === 'EN' ? "Select Variation" : "اختر التنوع"}</Form.Label>
-              <Form.Control as="select" value={selectedVariation?._id || ""} onChange={handleVariationChange}>
-                {product?.variations?.map((variation) => (
-                  <option key={variation._id} value={variation._id}>
-                    {language === 'EN' ? variation.v_name_en : variation.v_name_ar}
-                  </option>
-                ))}
-                {!product && <option value="dummy_variation_id">Dummy Variation</option>}
-              </Form.Control>
-            </Form.Group>
 
-            <Form.Group className="mt-3">
-              <div className="item-quantity d-flex align-items-center mt-2">
-                <button className="btn btn-outline-secondary quantity-btn" onClick={() => setQuantity(prev => Math.max(prev - 1, 1))}>-</button>
-                <input type="number" className="form-control quantity-input" value={quantity} readOnly />
-                <button className="btn btn-outline-secondary quantity-btn" onClick={() => setQuantity(prev => prev + 1)}>+</button>
-              </div>
-            </Form.Group>
+            
+            <div className="countdown-container mt-3">
+              <h5 className="countdown-title">{t.limitedTimeOffer || "Limited Time Offer"}</h5>
+              <Countdown 
+                date={getNextMidnight()} 
+                renderer={countdownRenderer}
+              />
+            </div>
+            
+            
+
+            
           </>
         )}
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className="p-0">
         <Button
           variant="primary"
           onClick={handleAddToCartClick}
           disabled={loading || !!error || !selectedVariation}
+          className="w-100  fw-bold m-0"  // Add the w-100 class here
         >
           {t.buyNow}
         </Button>

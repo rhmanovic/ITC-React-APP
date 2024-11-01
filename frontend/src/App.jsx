@@ -146,7 +146,8 @@ function App() {
 
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    toast.success("Added to cart!");
+    const successMessage = language === "EN" ? "Added to cart!" : "تم الاضافة للعربة";
+    toast.success(successMessage);
   };
 
   const handleIncreaseQuantity = (product) => {
