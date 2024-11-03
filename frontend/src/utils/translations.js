@@ -185,6 +185,7 @@ const translations = {
       loading: 'Loading',
       buyNow: "Buy Now",
       ProductDetails: "Product Details",
+      ChooseColor: "Choose Color",
       limitedTimeOffer: "Limited Time Offer!"
     }
   },
@@ -378,6 +379,7 @@ const translations = {
         loading: 'جارٍ التحميل',
         buyNow: "اشتر الآن",
         ProductDetails: "تفاصيل المنتج",
+        ChooseColor: "اختر اللون",
         limitedTimeOffer: "عرض محدود!"
       }
     

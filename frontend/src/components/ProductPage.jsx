@@ -10,6 +10,7 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariation, setSelectedVariation] = useState(null);
+  const [shake, setShake] = useState(false); // State to trigger shake effect
 
   const t = language === 'EN' ? translations.en.productPage : translations.ar.productPage;
   const currency = language === 'EN' ? translations.en.currency : translations.ar.currency;
@@ -19,14 +20,18 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
       .get(`${BASE_URL}/api/products/number/${productNumber}`)
       .then((response) => {
         setProduct(response.data.product);
-        if (response.data.product.variations && response.data.product.variations.length > 0) {
-          setSelectedVariation(response.data.product.variations[0]); // Default to the first variation
-        }
       })
       .catch((error) => console.error("Error fetching product:", error));
   }, [productNumber]);
 
   const handleAddToCart = () => {
+    // Check if product has variations, and if so, enforce selection
+    if (product.variations && product.variations.length > 0 && !selectedVariation) {
+      setShake(true); // Trigger shake effect if no variation is selected
+      setTimeout(() => setShake(false), 300); // Remove shake effect after animation duration
+      return;
+    }
+
     if (product && quantity) {
       const cartItem = {
         productId: product._id,
@@ -34,12 +39,22 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
         productName: language === 'EN' ? product.product_name_en : product.product_name_ar,
         product_name_en: product.product_name_en,
         product_name_ar: product.product_name_ar,
-        warranty: product.warranty,
-        variantId: selectedVariation ? selectedVariation._id : null,
-        variantName: selectedVariation ? (language === 'EN' ? selectedVariation.v_name_en : selectedVariation.v_name_ar) : null,
         brandName: product.brand,
         productImage: product.product_image,
-        price: parseFloat(selectedVariation ? selectedVariation.v_sale_price : product.sale_price),
+        offerId: product.offer ? product.offer._id : null, // Assuming `offer` exists in `product`
+
+        // Pricing logic: Use variation price if available; otherwise, use product price
+        price: selectedVariation ? parseFloat(selectedVariation.v_sale_price) : parseFloat(product.sale_price),
+
+        // Warranty logic: Use variation warranty if available; otherwise, use product warranty
+        warranty: selectedVariation ? selectedVariation.v_warranty : product.warranty,
+
+        variantId: selectedVariation ? selectedVariation._id : null,
+        variantName: selectedVariation ? (language === 'EN' ? selectedVariation.v_name_en : selectedVariation.v_name_ar) : null,
+        v_name_en: selectedVariation ? selectedVariation.v_name_en : null,
+        v_name_ar: selectedVariation ? selectedVariation.v_name_ar : null,
+        v_warranty: selectedVariation ? selectedVariation.v_warranty : null,
+
         quantity: parseInt(quantity, 10),
       };
       onAddToCart(cartItem);
@@ -51,9 +66,6 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
   if (!product) {
     return <p>{t.loading}...</p>;
   }
-
-  // Log all items in the cart
-  console.log("product Details:", product);
 
   return (
     <Container className="main mt-5 product-page">
@@ -103,15 +115,18 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
           {/* Variation Selector */}
           {product.variations && product.variations.length > 0 && (
             <Form.Group className="mt-3">
-              <Form.Label>{t.chooseVariation}</Form.Label>
+              <Form.Label>{t.ChooseColor}</Form.Label>
               <Form.Control
                 as="select"
+                className={`${shake ? "shake red-border" : ""}`} // Apply shake and red border if triggered
                 value={selectedVariation ? selectedVariation._id : ''}
                 onChange={(e) => {
                   const selected = product.variations.find(variation => variation._id === e.target.value);
                   setSelectedVariation(selected);
                 }}
               >
+                {/* Placeholder option */}
+                <option value="" disabled>{t.ChooseColor}</option>
                 {product.variations
                   .filter(variation => variation.v_show) // Only show variations with v_show set to true
                   .map((variation) => (
@@ -143,7 +158,10 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
               >+</button>
             </div>
           </Form.Group>
-          <Button className="mt-3 btn-add-to-cart" onClick={handleAddToCart}>
+          <Button 
+            className="mt-3 btn-add-to-cart" 
+            onClick={handleAddToCart}
+          >
             {t.addToCart}
           </Button>
         </Col>

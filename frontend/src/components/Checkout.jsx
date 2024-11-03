@@ -61,6 +61,7 @@ function Checkout({ language, cart, customer, clearCart }) {
       customerName: name || '', // Make name optional
       merchant: YOUR_MERCHANT_ID, // Use the merchant ID from config
       items: cart,
+      source: "online",
       address: address,
       phone: phone,
       paymentMethod: paymentMethod, // Include payment method
