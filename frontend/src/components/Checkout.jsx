@@ -55,37 +55,39 @@ function Checkout({ language, cart, customer, clearCart }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true); // Set loading to true when the form is submitted
+    setLoading(true); // Show the loading spinner
 
     const orderData = {
-      customerName: name || '', // Make name optional
-      merchant: YOUR_MERCHANT_ID, // Use the merchant ID from config
+      customerName: name || '', 
+      merchant: YOUR_MERCHANT_ID, 
       items: cart,
       source: "online",
       address: address,
       phone: phone,
-      paymentMethod: paymentMethod, // Include payment method
+      paymentMethod: paymentMethod, 
       deliveryFee: 0,
       total: parseFloat(cart.reduce((total, item) => total + (item.price * item.quantity), 0)).toFixed(2),
     };
 
-    console.log('Order submitted:', orderData);
-
     try {
       const response = await axios.post(`${BASE_URL}/api/submit-order`, orderData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       });
 
-      // If there's a redirect URL (for cash payment), handle the redirection in the frontend
+      // Check if there's a redirect URL
       if (response.data.redirectUrl) {
-        window.location.href = response.data.redirectUrl;
+        const redirectUrl = response.data.redirectUrl;
+
+        // Determine if the URL is internal (relative path starting with '/')
+        if (redirectUrl.startsWith('/')) {
+          navigate(redirectUrl);  // Use React Router for internal redirects
+        } else {
+          window.location.href = redirectUrl;  // Use full-page reload for external URLs
+        }
       } else {
-        // Handle other cases (e.g., successful payment via knet)
         alert('Order submitted successfully!');
-        // Optionally clear the cart or redirect to a success page
         clearCart();
+        navigate('/order-success'); // Optionally redirect to a success page within the app
       }
     } catch (error) {
       console.error('Error submitting order:', error);
@@ -94,6 +96,7 @@ function Checkout({ language, cart, customer, clearCart }) {
       setLoading(false); // Stop the loading spinner
     }
   };
+
 
 
   const handlePhoneChange = (e) => {
