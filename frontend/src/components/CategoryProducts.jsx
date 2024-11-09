@@ -60,14 +60,11 @@ function CategoryProducts({ language, onAddToCart, cart }) {
 
   return (
     <Container className="main mt-0">
-      
-
-      
-      {offers.length === 0 ? (
-        <p>No offers available for this category.</p>
+      {offers.length === 0 && products.length === 0 ? (
+        <p>No products or offers available for this category.</p>
       ) : (
         <Row className="mt-4">
-          {offers.map((offer) => (
+          {offers.length > 0 && offers.map((offer) => (
             <Col key={offer._id} xs={6} md={4} lg={3} className="mb-2 px-1">
               <Card 
                 onClick={() => handleCardClick(offer)}
@@ -96,7 +93,7 @@ function CategoryProducts({ language, onAddToCart, cart }) {
             </Col>
           ))}
 
-          {products.map((product) => (
+          {products.length > 0 && products.map((product) => (
             <Col key={product._id} xs={6} md={4} lg={3} className="mb-4">
               <Card 
                 onClick={() => handleProductClick(product)} 
