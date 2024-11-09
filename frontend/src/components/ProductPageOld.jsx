@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Card, Button, Form, Carousel } from "react-bootstrap";
 import { BASE_URL } from "../config";
-import { YOUR_MERCHANT_ID } from "../config"
 import translations from "../utils/translations";
 
 const ProductPage = ({ language = 'EN', onAddToCart }) => {
@@ -18,7 +17,7 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/products/number/${productNumber}/${YOUR_MERCHANT_ID}`)
+      .get(`${BASE_URL}/api/products/number/${productNumber}`)
       .then((response) => {
         setProduct(response.data.product);
       })

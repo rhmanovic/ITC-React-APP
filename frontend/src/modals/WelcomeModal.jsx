@@ -11,6 +11,8 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [shake, setShake] = useState(false); // State to trigger shake effect if no variation is selected
+
   const currency = language === 'EN' ? translations.en.currency : translations.ar.currency;
   const t = language === 'EN' ? translations.en.productPage : translations.ar.productPage;
 
@@ -24,7 +26,6 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
           const productData = response.data.product;
           const availableVariations = productData.variations.filter(variation => variation.v_show);
           setProduct({ ...productData, variations: availableVariations });
-          setSelectedVariation(availableVariations[0] || null);
           setLoading(false);
         })
         .catch((error) => {
@@ -50,9 +51,16 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
     const variationId = event.target.value;
     const selected = product.variations.find((variation) => variation._id === variationId);
     setSelectedVariation(selected);
+    setShake(false); // Reset shake effect when a variation is selected
   };
 
   const handleAddToCartClick = () => {
+    if (!selectedVariation && product.variations.length > 0) {
+      setShake(true); // Trigger shake effect if no variation is selected
+      setTimeout(() => setShake(false), 300); // Remove shake effect after animation duration
+      return; // Prevent adding to cart without selecting a variation
+    }
+
     const cartItem = {
       offerId: offer._id,
       offerName: language === 'EN' ? offer.offer_name_en : offer.offer_name_ar,
@@ -109,23 +117,26 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
           <Alert variant="danger">{error}</Alert>
         ) : (
           <>
-            {/* Row with 2 columns above the image */}
             <Row className="mb-3">
               <Col>
                 <div>{language === 'EN' ? "Details" : "تفاصيل"}</div>
-                <h2 className="">{language === 'EN' ? offer?.offer_name_en : offer?.offer_name_ar || "Welcome"}</h2>
+                <h2>{language === 'EN' ? offer?.offer_name_en : offer?.offer_name_ar || "Welcome"}</h2>
                 <Form.Group className="mt-3">
                   <Form.Label>{language === 'EN' ? "Select Variation" : "اختر التنوع"}</Form.Label>
-                  <Form.Control as="select" value={selectedVariation?._id || ""} onChange={handleVariationChange}>
+                  <Form.Control
+                    as="select"
+                    className={`${shake ? "shake red-border" : ""}`} // Apply shake effect if triggered
+                    value={selectedVariation ? selectedVariation._id : ""}
+                    onChange={handleVariationChange}
+                  >
+                    <option value="" disabled>{t.ChooseColor}</option>
                     {product?.variations?.map((variation) => (
                       <option key={variation._id} value={variation._id}>
                         {language === 'EN' ? variation.v_name_en : variation.v_name_ar}
                       </option>
                     ))}
-                    {!product && <option value="dummy_variation_id">Dummy Variation</option>}
                   </Form.Control>
                 </Form.Group>
-
 
                 <Form.Group className="mt-3">
                   <div className="item-quantity d-flex align-items-center mt-2">
@@ -134,7 +145,6 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
                     <button className="btn btn-outline-secondary quantity-btn" onClick={() => setQuantity(prev => prev + 1)}>+</button>
                   </div>
                 </Form.Group>
-                
               </Col>
               <Col>
                 <div>{language === 'EN' ? "More Info" : "مزيد من المعلومات"}</div>
@@ -146,7 +156,6 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
               </Col>
             </Row>
 
-
             <div className="price-section d-flex align-items-center mt-3">
               <span className="new-price ms-2">
                 {parseFloat(offer.discounted_price).toFixed(3)} {currency}
@@ -157,7 +166,6 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
               <span className="discount-badge">%{discountPercentage}-</span>
             </div>
 
-            
             <div className="countdown-container mt-3">
               <h5 className="countdown-title">{t.limitedTimeOffer || "Limited Time Offer"}</h5>
               <Countdown 
@@ -165,10 +173,6 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
                 renderer={countdownRenderer}
               />
             </div>
-            
-            
-
-            
           </>
         )}
       </Modal.Body>
@@ -176,8 +180,7 @@ const WelcomeModal = ({ show, handleClose, offer, language, onAddToCart }) => {
         <Button
           variant="primary"
           onClick={handleAddToCartClick}
-          disabled={loading || !!error || !selectedVariation}
-          className="w-100  fw-bold m-0"  // Add the w-100 class here
+          className="w-100 fw-bold m-0"
         >
           {t.buyNow}
         </Button>

@@ -1,53 +1,105 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Card, Container, Row, Col } from "react-bootstrap";
 import "../style/App.css";
 import translations from "../utils/translations";
-import { BASE_URL } from "../config";
+import { BASE_URL, YOUR_MERCHANT_ID } from "../config";
+import ProductModal1 from "../modals/ProductModal1"; // Import the Product modal
+import WelcomeModal from "../modals/WelcomeModal.jsx"; // Import offer modal component
 
 function CategoryProducts({ language, onAddToCart, cart }) {
   const { categoryNumber } = useParams();
-  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [offers, setOffers] = useState([]);
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedOffer, setSelectedOffer] = useState(null);
 
   const currency = language === 'EN' ? translations.en.currency : translations.ar.currency;
 
   useEffect(() => {
-    console.log(`Fetching products for category number: ${categoryNumber}`);
     axios
-      .get(`${BASE_URL}/api/categories/${categoryNumber}/products`)
+      .get(`${BASE_URL}/api/categories/${categoryNumber}/products/${YOUR_MERCHANT_ID}`)
       .then((response) => {
-        console.log("Fetched products:", response.data);
-        const { products } = response.data;
+        const { products, offers } = response.data;
         setProducts(products);
+        setOffers(offers);
       })
-      .catch((error) => console.error("Error fetching products:", error));
+      .catch((error) => console.error("Error fetching products and offers:", error));
   }, [categoryNumber]);
 
-  const handleProductClick = (productNumber) => {
-    navigate(`/product/${productNumber}`);
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setShowProductModal(true);
   };
 
-  // Helper function to determine badge color based on warranty
+  const handleCloseProductModal = () => {
+    setShowProductModal(false);
+    setSelectedProduct(null);
+  };
+
+  const handleCardClick = (offer) => {
+    setSelectedOffer(offer);
+    setShowWelcomeModal(true);
+  };
+
+  const handleCloseWelcomeModal = () => {
+    setShowWelcomeModal(false);
+    setSelectedOffer(null);
+  };
+
   const getBadgeColor = (warranty) => {
-    const warrantyValue = parseInt(warranty, 10); // Parse to ensure it's a number
+    const warrantyValue = parseInt(warranty, 10);
     if (warrantyValue === 1) return "green-badge";
     if (warrantyValue === 2) return "blue-badge";
-    if (warrantyValue >= 3) return "gold-badge"; // Use >= 3 for 3 or more years
-    return ""; // Default empty class if no warranty
+    if (warrantyValue >= 3) return "gold-badge";
+    return "";
   };
 
   return (
     <Container className="main mt-0">
-      {products.length === 0 ? (
-        <p>No products available for this category.</p>
+      
+
+      
+      {offers.length === 0 ? (
+        <p>No offers available for this category.</p>
       ) : (
-        <Row className="mt-5">
+        <Row className="mt-4">
+          {offers.map((offer) => (
+            <Col key={offer._id} xs={6} md={4} lg={3} className="mb-2 px-1">
+              <Card 
+                onClick={() => handleCardClick(offer)}
+                className="offer-card"
+              >
+                <Card.Img
+                  variant="top"
+                  src={offer.offer_image ? `${BASE_URL}${offer.offer_image}` : "https://via.placeholder.com/150"}
+                  alt={language === 'EN' ? offer.offer_name_en : offer.offer_name_ar}
+                  loading="lazy"
+                />
+                <Card.Body className="card-body">
+                  <Card.Title className="offer-title">
+                    {language === 'EN' ? offer.offer_name_en : offer.offer_name_ar}
+                  </Card.Title>
+                  <div className="price-section d-flex align-items-center mt-3">
+                    <span className="new-price-offers ms-2">
+                      {parseFloat(offer.discounted_price).toFixed(3)} {currency}
+                    </span>
+                    <span className="old-price-offers ms-2 text-muted">
+                      <del>{parseFloat(offer.original_price).toFixed(3)} {currency}</del>
+                    </span>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+
           {products.map((product) => (
             <Col key={product._id} xs={6} md={4} lg={3} className="mb-4">
               <Card 
-                onClick={() => handleProductClick(product.product_number)} 
+                onClick={() => handleProductClick(product)} 
                 className="product-card"
               >
                 <Card.Img
@@ -78,6 +130,28 @@ function CategoryProducts({ language, onAddToCart, cart }) {
         </Row>
       )}
       <div style={{ height: '50px' }}></div>
+
+      {/* Modal for Selected Product */}
+      {selectedProduct && (
+        <ProductModal1
+          show={showProductModal}
+          handleClose={handleCloseProductModal}
+          productId={selectedProduct._id}
+          language={language}
+          onAddToCart={onAddToCart}
+        />
+      )}
+
+      {/* Modal for Selected Offer */}
+      {selectedOffer && (
+        <WelcomeModal
+          show={showWelcomeModal}
+          handleClose={handleCloseWelcomeModal}
+          offer={selectedOffer}
+          language={language}
+          onAddToCart={onAddToCart}
+        />
+      )}
     </Container>
   );
 }
