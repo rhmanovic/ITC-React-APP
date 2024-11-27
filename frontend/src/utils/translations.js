@@ -186,7 +186,10 @@ const translations = {
       buyNow: "Buy Now",
       ProductDetails: "Product Details",
       ChooseColor: "Choose Color",
-      limitedTimeOffer: "Limited Time Offer!"
+      limitedTimeOffer: "Limited Time Offer!",
+      warranty: "year warranty",
+      off: "خصم"
+      
     }
   },
   ar: {
@@ -380,7 +383,9 @@ const translations = {
         buyNow: "اشتر الآن",
         ProductDetails: "تفاصيل المنتج",
         ChooseColor: "اختر اللون",
-        limitedTimeOffer: "عرض محدود!"
+        limitedTimeOffer: "عرض محدود!",
+        warranty: "سنة كفالة",
+        off: "خصم"
       }
     
 

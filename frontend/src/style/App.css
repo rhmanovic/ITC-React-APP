@@ -200,13 +200,6 @@ html, body {
 }
 
 
-.price-section {
-  display: flex;
-  align-items: baseline;
-  justify-content: start; /* Changed from center to start */
-  font-size: 1.5rem;
-  margin-top: 10px;
-}
 
 
 
@@ -295,3 +288,94 @@ html, body {
 .red-border {
   border: 1px solid red !important;
 }
+
+
+/* App.css or your relevant stylesheet */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.offer-card {
+  animation: shake 0.5s ease-in-out infinite;
+  animation-delay: 10s; /* Start shaking after 10 seconds */
+}
+
+@keyframes shake10s {
+  0% { transform: translateX(0); }
+  90% { transform: translateX(0); } /* No shaking for the first 90% of 10s */
+  92% { transform: translateX(-5px); }
+  94% { transform: translateX(5px); }
+  96% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.offer-card {
+  animation: shake10s 5s ease-in-out infinite;
+}
+
+/* App.css */
+
+/* Card Styling */
+.offer-card {
+  border: 2px solid #FFD700; /* Gold border */
+  border-radius: 12px; /* Softer corners */
+  /* background: linear-gradient(to bottom, #fff9e6, #fff6d5); /* Light gradient */ */
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  padding: 10px;
+}
+
+
+
+/* Discount Badge */
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(to right, #ff7e5f, #ff5733); /* Gradient */
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+}
+
+
+
+
+
+.new-price-offers {
+  font-size: 20px;
+  font-weight: bold;
+  color: #d32f2f; /* Bright red */
+}
+
+.old-price-offers {
+  font-size: 14px;
+  text-decoration: line-through;
+  color: #9e9e9e;
+}
+
+.save-amount {
+  font-size: 14px;
+  color: #28a745; /* Green to show savings */
+  font-weight: bold;
+}
+
+/* Title Styling */
+.offer-title {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin: 8px 0;
+}
+
+
+
+

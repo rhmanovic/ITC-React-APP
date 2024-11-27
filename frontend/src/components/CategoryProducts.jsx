@@ -17,6 +17,8 @@ function CategoryProducts({ language, onAddToCart, cart }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedOffer, setSelectedOffer] = useState(null);
 
+
+  const t = language === 'EN' ? translations.en.productPage : translations.ar.productPage;
   const currency = language === 'EN' ? translations.en.currency : translations.ar.currency;
 
   useEffect(() => {
@@ -64,66 +66,80 @@ function CategoryProducts({ language, onAddToCart, cart }) {
         <p>No products or offers available for this category.</p>
       ) : (
         <Row className="mt-4">
-          {offers.length > 0 && offers.map((offer) => (
+          {offers.length > 0 && offers.map((offer, index) => (
             <Col key={offer._id} xs={6} md={4} lg={3} className="mb-2 px-1">
-              <Card 
+              <Card
                 onClick={() => handleCardClick(offer)}
                 className="offer-card"
               >
+                {/* Discount Badge */}
+                <div className="discount-badge">
+                  {`${Math.round(((offer.original_price - offer.discounted_price) / offer.original_price) * 100)}% ${t.off}`} 
+                </div>
+
                 <Card.Img
                   variant="top"
                   src={offer.offer_image ? `${BASE_URL}${offer.offer_image}` : "https://via.placeholder.com/150"}
                   alt={language === 'EN' ? offer.offer_name_en : offer.offer_name_ar}
                   loading="lazy"
                 />
+
                 <Card.Body className="card-body">
                   <Card.Title className="offer-title">
                     {language === 'EN' ? offer.offer_name_en : offer.offer_name_ar}
                   </Card.Title>
-                  <div className="price-section d-flex align-items-center mt-3">
-                    <span className="new-price-offers ms-2">
+                  <div className="price-section text-center">
+                    {/* Prices on the same line */}
+                    <span className="new-price-offers ms-2 text-danger fw-bold">
                       {parseFloat(offer.discounted_price).toFixed(3)} {currency}
                     </span>
-                    <span className="old-price-offers ms-2 text-muted">
-                      <del>{parseFloat(offer.original_price).toFixed(3)} {currency}</del>
+                    <span className="old-price-offers ms-2 text-muted text-decoration-line-through">
+                      {parseFloat(offer.original_price).toFixed(3)} {currency}
                     </span>
+                    <br />
+                    {/* Savings on a new line */}
+                    <div className="save-amount text-success fw-bold">
+                      Save {parseFloat(offer.original_price - offer.discounted_price).toFixed(3)} {currency}
+                    </div>
                   </div>
                 </Card.Body>
               </Card>
             </Col>
           ))}
 
-          {products.length > 0 && products.map((product) => (
-            <Col key={product._id} xs={6} md={4} lg={3} className="mb-4">
-              <Card 
-                onClick={() => handleProductClick(product)} 
-                className="product-card"
-              >
-                <Card.Img
-                  variant="top"
-                  src={product.product_image ? `${BASE_URL}${product.product_image}` : "https://via.placeholder.com/150x265"}
-                  alt={language === 'EN' ? product.product_name_en : product.product_name_ar}
-                  loading="lazy"
-                />
+          {products.length > 0 && products
+            .filter(product => product.status) // Filter out products where status is false
+            .map((product) => (
+              <Col key={product._id} xs={6} md={4} lg={3} className="mb-4">
+                <Card 
+                  onClick={() => handleProductClick(product)} 
+                  className="product-card"
+                >
+                  <Card.Img
+                    variant="top"
+                    src={product.product_image ? `${BASE_URL}${product.product_image}` : "https://via.placeholder.com/150x265"}
+                    alt={language === 'EN' ? product.product_name_en : product.product_name_ar}
+                    loading="lazy"
+                  />
 
-                {/* Warranty Badge */}
-                {product.warranty && (
-                  <div className={`warranty-badge ${getBadgeColor(product.warranty)}`}>
-                    <span>{product.warranty} {product.warranty > 1 ? 'Years' : 'Year'} Warranty</span>
-                  </div>
-                )}
+                  {/* Warranty Badge */}
+                  {product.warranty && (
+                    <div className={`warranty-badge ${getBadgeColor(product.warranty)}`}>
+                      <span>{product.warranty} {product.warranty > 1 ? 'Years' : 'Year'} Warranty</span>
+                    </div>
+                  )}
 
-                <Card.Body className="card-body">
-                  <Card.Title className="product-title">
-                    {language === 'EN' ? product.product_name_en : product.product_name_ar}
-                  </Card.Title>
-                  <span className="price">
-                    {parseFloat(product.sale_price).toFixed(3)} {currency}
-                  </span>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+                  <Card.Body className="card-body">
+                    <Card.Title className="product-title">
+                      {language === 'EN' ? product.product_name_en : product.product_name_ar}
+                    </Card.Title>
+                    <span className="price">
+                      {parseFloat(product.sale_price).toFixed(3)} {currency}
+                    </span>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
         </Row>
       )}
       <div style={{ height: '50px' }}></div>
