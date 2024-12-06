@@ -59,6 +59,7 @@ const ProductModal1 = ({ show, handleClose, productId, language, onAddToCart }) 
         productImage: product.product_image,
         offerId: product.offer ? product.offer._id : null,
         price: selectedVariation ? parseFloat(selectedVariation.v_sale_price) : parseFloat(product.sale_price),
+        cost: selectedVariation ? parseFloat(selectedVariation.v_purchase_price) : parseFloat(product.purchase_price),
         warranty: selectedVariation ? selectedVariation.v_warranty : product.warranty,
         variantId: selectedVariation ? selectedVariation._id : null,
         variantName: selectedVariation ? (language === 'EN' ? selectedVariation.v_name_en : selectedVariation.v_name_ar) : null,

@@ -46,6 +46,7 @@ const ProductPage = ({ language = 'EN', onAddToCart }) => {
 
         // Pricing logic: Use variation price if available; otherwise, use product price
         price: selectedVariation ? parseFloat(selectedVariation.v_sale_price) : parseFloat(product.sale_price),
+          cost: selectedVariation ? parseFloat(selectedVariation.v_purchase_price) : parseFloat(product.purchase_price),
 
         // Warranty logic: Use variation warranty if available; otherwise, use product warranty
         warranty: selectedVariation ? selectedVariation.v_warranty : product.warranty,

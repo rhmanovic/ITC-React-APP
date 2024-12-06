@@ -27,6 +27,11 @@ import ProductPage from "./components/ProductPage";
 import OfferPage from "./components/OfferPage";
 
 import CustomModal from "./modals/CustomModal";
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
+
+
+
 import LoginModal from "./modals/LoginModal";
 import SignUpModal from "./modals/SignUpModal";
 import AccountModal from "./modals/AccountModal";
@@ -251,6 +256,9 @@ function App() {
               />
             }
           />
+          <Route path="/privacy-policy" element={<PrivacyPolicy language={language} />} />
+          <Route path="/terms-of-service" element={<TermsOfService language={language} />} />
+          
           <Route
             path="/category/:categoryNumber"
             element={

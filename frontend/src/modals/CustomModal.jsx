@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhoneAlt, faInfoCircle, faShieldAlt, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp, faSnapchatGhost, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import translations from '../utils/translations'; // Adjust the import path as necessary
+import { Link } from 'react-router-dom'; // Import Link from React Router
 
 function CustomModal({ show, onHide, language }) {
   const [closing, setClosing] = useState(false);
@@ -21,7 +21,23 @@ function CustomModal({ show, onHide, language }) {
     }
   }, [show, visible]);
 
-  const t = language === 'EN' ? translations.en.customModal : translations.ar.customModal;
+  const t = language === 'EN'
+    ? {
+        moreOptions: 'More Options',
+        contactUs: 'Contact Us',
+        aboutUs: 'About Us',
+        privacyPolicy: 'Privacy Policy',
+        arabic: 'العربية',
+        english: 'English',
+      }
+    : {
+        moreOptions: 'خيارات إضافية',
+        contactUs: 'تواصل معنا',
+        aboutUs: 'معلومات عنا',
+        privacyPolicy: 'سياسة الخصوصية',
+        arabic: 'العربية',
+        english: 'English',
+      };
 
   return (
     <div className={`custom-modal-wrapper ${visible ? 'show' : ''} ${closing ? 'hide' : ''}`} dir={language === 'EN' ? 'ltr' : 'rtl'}>
@@ -46,8 +62,18 @@ function CustomModal({ show, onHide, language }) {
             </li>
             <li className="list-group-item">
               <FontAwesomeIcon icon={faShieldAlt} className="list-icon" />
-              <span className="px-1">{t.privacyPolicy}</span>
+              <Link to="/privacy-policy" className="px-1 text-decoration-none">
+                {t.privacyPolicy}
+              </Link>
             </li>
+            
+            <li className="list-group-item">
+              <FontAwesomeIcon icon={faShieldAlt} className="list-icon" />
+              <Link to="/terms-of-service" className="px-1 text-decoration-none">
+                {language === 'EN' ? 'Terms of Service' : 'شروط الخدمة'}
+              </Link>
+            </li>
+
             <li className="list-group-item">
               <FontAwesomeIcon icon={faLanguage} className="list-icon" />
               <span className="px-1">{language === 'EN' ? t.arabic : t.english}</span>
