@@ -1,18 +1,29 @@
 const express = require('express');
 const path = require('path');
-const cors = require('cors'); // For handling CORS requests
+const compression = require('compression');
+const cors = require('cors');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS
-app.use(cors({
-  origin: '*'  // You can change '*' to the specific frontend domain if needed
+// Enable CORS for API requests
+app.use(cors());
+
+// Enable GZIP compression for all responses
+app.use(compression());
+
+// Serve static files from the 'dist' folder
+app.use(express.static(path.join(__dirname, 'dist'), {
+  maxAge: '1y', // Cache static files for 1 year
+  immutable: true,
 }));
 
-// Serve static files from the "dist" directory
-app.use(express.static(path.join(__dirname, 'dist')));
+// Handle API requests
+app.get('/api', (req, res) => {
+  res.json({ message: 'API is working!' });
+});
 
-// Wildcard route to serve "index.html" for any route (SPA support)
+// SPA fallback to serve index.html for unknown routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
