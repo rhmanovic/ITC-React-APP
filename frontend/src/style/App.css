@@ -300,7 +300,7 @@ html, body {
 .offer-card {
   border: 2px solid #FFD700; /* Gold border */
   border-radius: 12px; /* Softer corners */
-  /* background: linear-gradient(to bottom, #fff9e6, #fff6d5); /* Light gradient */ */
+  
   transition: transform 0.3s, box-shadow 0.3s;
   position: relative;
   padding: 10px;
