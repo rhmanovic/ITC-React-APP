@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./style/Modal.css";
-import "./style/SplashScreen.css";
+// import "./style/SplashScreen.css";
 
 import { BASE_URL, YOUR_MERCHANT_ID } from "./config";
 import Navbar from "./components/Navbar";
@@ -39,7 +39,7 @@ import UpdateProfileModal from "./modals/UpdateProfileModal";
 import AddressesModal from "./modals/AddressesModal";
 import ChangePasswordModal from "./modals/ChangePasswordModal";
 import AddAddressModal from "./modals/AddAddressModal";
-import SplashScreen from "./components/SplashScreen";
+// import SplashScreen from "./components/SplashScreen";
 import ProductModal from "./modals/ProductModal"; 
 import VariantModal from "./modals/VariantModal"; 
 import DummyCartModal from "./modals/DummyCartModal"; 
@@ -64,8 +64,8 @@ function App() {
   const [showAddressesModal, setShowAddressesModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [showAddAddressModal, setShowAddAddressModal] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
-  const [splashClass, setSplashClass] = useState("");
+  // const [showSplash, setShowSplash] = useState(true);
+  // const [splashClass, setSplashClass] = useState("");
 
   const [showProductModal, setShowProductModal] = useState(false);
   const [showVariantModal, setShowVariantModal] = useState(false);
@@ -102,8 +102,8 @@ function App() {
       })
       .catch((error) => console.error("Error fetching data:", error))
       .finally(() => {
-        setSplashClass("slide-out");
-        setTimeout(() => setShowSplash(false), 1000); // Duration of the slide-out animation
+        // setSplashClass("slide-out");
+        // setTimeout(() => setShowSplash(false), 1000); // Duration of the slide-out animation
       });
   }, []);
 
@@ -229,11 +229,11 @@ function App() {
 
   return (
     <div className="pt-5" dir={language === "EN" ? "ltr" : "rtl"}>
-      {showSplash && (
+      {/* {showSplash && (
         <div className={`splash-screen ${splashClass}`}>
           <SplashScreen />
         </div>
-      )}
+      )} */}
       <Navbar
         projectName={merchantName}
         language={language}
