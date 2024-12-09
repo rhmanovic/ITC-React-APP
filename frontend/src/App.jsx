@@ -29,6 +29,8 @@ import OfferPage from "./components/OfferPage";
 import CustomModal from "./modals/CustomModal";
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
+import OrderDetails from "./components/OrderDetails";
+
 
 
 
@@ -258,6 +260,7 @@ function App() {
           />
           <Route path="/privacy-policy" element={<PrivacyPolicy language={language} />} />
           <Route path="/terms-of-service" element={<TermsOfService language={language} />} />
+          <Route path="/order/:params" element={<OrderDetails language={language} />} />
           
           <Route
             path="/category/:categoryNumber"
