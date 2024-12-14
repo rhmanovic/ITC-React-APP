@@ -46,6 +46,18 @@ import ProductModal from "./modals/ProductModal";
 import VariantModal from "./modals/VariantModal"; 
 import DummyCartModal from "./modals/DummyCartModal"; 
 
+
+// New ContactW Component
+const ContactW = () => {
+  useEffect(() => {
+    // Redirect to the WhatsApp link
+    window.location.href = "https://wa.me/96590903115";
+  }, []);
+
+  return null; // The component doesn't render anything
+};
+
+
 function App() {
   const location = useLocation(); // Get the current route location
 
@@ -246,6 +258,8 @@ function App() {
       <div className="flex-grow-1 pt-1">
         <Routes>
           <Route path="/" element={<Categories language={language} />} />
+          <Route path="/contactw" element={<ContactW />} />
+
           <Route
             path="/menu"
             element={
