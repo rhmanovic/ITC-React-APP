@@ -385,13 +385,17 @@ html, body {
 }
 
 /* Skeleton Loader for Loading State */
-.aspect-ratio-container::before {
+.aspect-ratio-container.loading::before {
   content: "";
   display: block;
   padding-top: 56.25%; /* Default Aspect Ratio: 16:9 */
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite;
+}
+
+.aspect-ratio-container:not(.loading)::before {
+  display: none;
 }
 
 /* Skeleton Loaders for Titles and Text */
