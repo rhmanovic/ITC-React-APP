@@ -380,7 +380,7 @@ html, body {
 }
 
 /* Skeleton Loader for Loading State */
-.aspect-ratio-container.loading::before {
+.aspect-ratio-container::before {
   content: "";
   display: block;
   padding-top: 56.25%; /* Default Aspect Ratio: 16:9 */
