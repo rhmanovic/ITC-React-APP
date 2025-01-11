@@ -362,7 +362,6 @@ html, body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background-color: #f0f0f0; /* Placeholder background */
 }
 
 .aspect-ratio-container img {
@@ -372,12 +371,7 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 0;
-}
-
-.aspect-ratio-container:not(.loading) img {
-  opacity: 1;
+  transition: transform 0.3s ease;
 }
 
 .aspect-ratio-container img:hover {
@@ -385,17 +379,17 @@ html, body {
 }
 
 /* Skeleton Loader for Loading State */
+.aspect-ratio-container.loading {
+  background: #f0f0f0;
+}
+
 .aspect-ratio-container.loading::before {
   content: "";
   display: block;
-  padding-top: 56.25%; /* Default Aspect Ratio: 16:9 */
+  padding-top: 56.25%;
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite;
-}
-
-.aspect-ratio-container:not(.loading)::before {
-  display: none;
 }
 
 /* Skeleton Loaders for Titles and Text */
