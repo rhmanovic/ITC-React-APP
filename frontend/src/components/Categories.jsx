@@ -64,7 +64,7 @@ function Categories({ language }) {
                   className="category-card"
                 >
                   <div
-                    className="aspect-ratio-container"
+                    className={`aspect-ratio-container ${category.imgsrc ? '' : 'loading'}`}
                     style={{
                       paddingTop: `${(category.imageHeight / category.imageWidth) * 100}%`,
                     }}
@@ -73,6 +73,7 @@ function Categories({ language }) {
                       src={category.imgsrc ? `${BASE_URL}${category.imgsrc}` : "https://via.placeholder.com/150x265"}
                       alt={language === "EN" ? category.EnglishName : category.ArabicName}
                       loading="lazy"
+                      onLoad={(e) => e.target.parentElement.classList.remove('loading')}
                     />
                   </div>
                   <Card.Body>
